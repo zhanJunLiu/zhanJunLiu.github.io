@@ -1,11 +1,39 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>iOS 性能检测及优化方案 | phantom_jun</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、 启动性能分析: 启动时间是衡量应用性能的重要指标。 本次测试从main函数启动之前和main函数启动之后进行启动性能分析，如何去优化启动时间 名词解释:    1.Mach-o格式， 我们的程序想要跑起来， 那么程序的可执行文件就需要被操作系统所理解，Mac OS/iOS系统中Mach-o就是可执行文件；Mach-o格式文件有: Executable(可执行文件)、Dynamic Libra">
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="iOS 性能检测及优化方案"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="phantom_jun">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/04/09/iOS-性能检测及优化方案/"/>
+
+
+<meta name="description" content="一、 启动性能分析: 启动时间是衡量应用性能的重要指标。 本次测试从main函数启动之前和main函数启动之后进行启动性能分析，如何去优化启动时间 名词解释:    1.Mach-o格式， 我们的程序想要跑起来， 那么程序的可执行文件就需要被操作系统所理解，Mac OS/iOS系统中Mach-o就是可执行文件；Mach-o格式文件有: Executable(可执行文件)、Dynamic Libra">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 性能检测及优化方案">
 <meta property="og:url" content="http://yoursite.com/2018/04/09/iOS-性能检测及优化方案/index.html">
@@ -21,112 +49,90 @@
 <meta name="twitter:title" content="iOS 性能检测及优化方案">
 <meta name="twitter:description" content="一、 启动性能分析: 启动时间是衡量应用性能的重要指标。 本次测试从main函数启动之前和main函数启动之后进行启动性能分析，如何去优化启动时间 名词解释:    1.Mach-o格式， 我们的程序想要跑起来， 那么程序的可执行文件就需要被操作系统所理解，Mac OS/iOS系统中Mach-o就是可执行文件；Mach-o格式文件有: Executable(可执行文件)、Dynamic Libra">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1964070-566bffa7b0ee5ea9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/scrollUp/image.css">
-  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
-  
-</head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <div class="logo">
-        <img src="/logo.png" alt="Profile Picture">
-      </div>
-      <div id="title">phantom_jun</div>
-      
-       <ul class="my-socials">
-  
- 
-</ul>
-    </div>
-  </div>
-  <div id="header-inner" class="">
-    <nav id="main-nav">
-      <a id="main-nav-toggle" class="nav-icon"></a>
-      <!--
-        
-          
-            <a class="main-nav-link" href="/">首页</a>
-          
-            <a class="main-nav-link" href="/categories/life">生活</a>
-          
-            <a class="main-nav-link" href="/archives">归档</a>
-          
-        
-      -->
-    </nav>
-    <nav id="title-nav" style="display:none">
-      <a href="/">phantom_jun</a>
-      <img src="/logo.png" alt="Profile Picture">
-      <!--
-      <span id="title-nav-socials">
-        
-       
-     </span>
-      -->
-    </nav>
-    <nav id="sub-nav">
-      
-      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-    </nav>
-    <div id="search-form-wrap">
-      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
-        <input type="submit" value="" class="search-form-submit">
-        <input name=tn type=hidden value="bds">
-        <input name=cl type=hidden value="3">
-        <input name=ct type=hidden value="2097152">
-        <input type="hidden" name="si" value="yoursite.com">
-      </form>
-    </div>
-  </div>
-  <div class="site-nav" style="display: none;">
-    <ul>
-      
-      
-        <li><a href="/">首页</a></li>
-      
-        <li><a href="/categories/life">生活</a></li>
-      
-        <li><a href="/archives">归档</a></li>
-      
-      
-    </ul>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-iOS-性能检测及优化方案" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/09/iOS-性能检测及优化方案/" class="article-date">
-  <time datetime="2018-04-09T12:20:42.000Z" itemprop="datePublished">2018-04-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      iOS 性能检测及优化方案
-    </h1>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
   
 
+
+
+    <title> iOS 性能检测及优化方案 - phantom_jun </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">phantom_jun</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
       </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          iOS 性能检测及优化方案
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 09 2018
+      </time>
+    </header>
+
+
+
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="一、-启动性能分析"><a href="#一、-启动性能分析" class="headerlink" title="一、 启动性能分析:"></a>一、 启动性能分析:</h4><ol>
+            <div class="post-content">
+            <h4 id="一、-启动性能分析"><a href="#一、-启动性能分析" class="headerlink" title="一、 启动性能分析:"></a>一、 启动性能分析:</h4><ol>
 <li>启动时间是衡量应用性能的重要指标。</li>
 <li>本次测试从<code>main</code>函数启动之前和<code>main</code>函数启动之后进行启动性能分析，如何去优化启动时间</li>
 <li>名词解释: </li>
@@ -187,72 +193,75 @@
 </ol>
 <p>未完待续… …</p>
 <h4 id="三、-runtime"><a href="#三、-runtime" class="headerlink" title="三、 runtime"></a>三、 runtime</h4>
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2018/04/09/iOS-性能检测及优化方案/" data-id="cjfs8m9xy0000cejhlb9mfa3x" class="article-share-link">Share</a>
-      
+            </div>
+          
 
-      
-    </footer>
-  </div>
-  
     
-<nav id="article-nav">
-  
-  
-    <a href="/2018/03/26/认识-ReactNative/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">认识 ReactNative</div>
-    </a>
-  
-</nav>
+      <footer class="post-footer">
+		
 
-  
-</article>
-
-</section>
         
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 LZJ<br>
-      Theme <a href="https://github.com/henryhuang/oishi" target="_blank">Oishi</a>, Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/03/26/认识-ReactNative/">
+        <span class="next-text nav-default">认识 ReactNative</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
   </div>
-</footer>
+
+
+      </footer>
+    
+  </article>
+
     </div>
-    <!--
-      <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">首页</a>
-  
-    <a href="/categories/life" class="mobile-nav-link">生活</a>
-  
-    <a href="/archives" class="mobile-nav-link">归档</a>
-  
-</nav>
-    -->
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">LZJ.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
     
 
-<!-- 百度分享 start -->
 
-<!-- 百度分享 end -->
-
-<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    
 
 
 
-<script src="/js/jquery.scrollUp.min.js"></script>
-<script src="/js/jquery.transform.js"></script>
-<script src="/js/menu.js"></script>
 
-<script src="/js/script.js"></script>
-<script src="/js/scrollUp.js"></script>
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
 
-  </div>
-</body>
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
 </html>
